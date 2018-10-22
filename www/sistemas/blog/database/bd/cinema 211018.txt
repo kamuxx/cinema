@@ -1,0 +1,327 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 22-10-2018 a las 04:40:38
+-- Versión del servidor: 10.1.33-MariaDB
+-- Versión de PHP: 7.2.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `cinema`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `calidad`
+--
+
+CREATE TABLE `calidad` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `calidad`
+--
+
+INSERT INTO `calidad` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
+(1, 'DVD_RIP', '2018-10-15 01:08:25', '2018-10-21 21:25:22'),
+(2, 'BR_HD 720', '2018-10-15 01:08:30', '2018-10-21 21:25:06'),
+(3, 'TS_SCREEN', '2018-10-15 01:08:35', '2018-10-21 21:25:12'),
+(4, 'BR_HD 1080', '2018-10-21 02:46:02', '2018-10-21 21:25:17');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `genero`
+--
+
+CREATE TABLE `genero` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `gen_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `genero`
+--
+
+INSERT INTO `genero` (`id`, `gen_nombre`) VALUES
+(2, 'Accion'),
+(3, 'Comedia'),
+(4, 'Aventura'),
+(5, 'Ciencia Ficcion');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `migrations`
+--
+
+INSERT INTO `migrations` (`migration`, `batch`) VALUES
+('2014_10_12_000000_create_users_table', 1),
+('2014_10_12_100000_create_password_resets_table', 1),
+('2018_09_20_212019_create_pelicula_table', 1),
+('2018_09_20_212029_create_genero_table', 1),
+('2018_10_14_151606_add_CreateCalidadTable', 2),
+('2018_10_14_151833_create_calidad_table', 3),
+('2018_10_14_152115_create_calidad_table', 4),
+('2018_10_14_195259_create_movie_table', 5),
+('2018_10_14_200030_create_movie_calidad_table', 6),
+('2018_10_14_223844_create_movie_genero_table', 7),
+('2018_10_17_202026_add_imagen_to_table', 8),
+('2018_10_20_223315_add_movie_calidad_size_movie_calidad', 9),
+('2018_10_21_202643_add_titulo_latino_movie', 10);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `movie`
+--
+
+CREATE TABLE `movie` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `sinopsis` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `duracion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `trailer` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `year` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `imagen` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre_latino` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `idioma` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `movie`
+--
+
+INSERT INTO `movie` (`id`, `nombre`, `sinopsis`, `duracion`, `trailer`, `year`, `imagen`, `nombre_latino`, `idioma`) VALUES
+(8, 'THE MEG', 'Un tiburón prehistórico de 25 metros de longitud amenaza a los tripulantes de un submarino hundido en la fosa más profunda del océano Pacífico y al grupo enviado para rescatarlos. Si no lo detienen, el tiburón causará estragos.', '110', 'https://www.youtube.com/embed/azI5fLoocDo', '2018', '16megalodon.jpg', 'MEGALODON', 'Español'),
+(12, 'JURASSIC WORLD 2', 'Ante el peligro de un volcán que está por hacer erupción, Owen y Claire regresan a la isla para salvar a los dinosaurios que quedan.', '150', 'https://www.youtube.com/embed/ye8-GQNf8p0', '2018', '42jw2.jpg', 'Mundo Jurasico - El Reino Caido', 'Español'),
+(18, 'SKYSCRAPER', 'Will Sawyer (Dwayne Johnson) es un antiguo líder del Equipo de Rescate de Rehenes del FBI y un veterano de los marines. En la actualidad trabaja como asesor de seguridad encargado de gestionar las infraestructuras de los rascacielos más grandes del mundo.', '103', 'https://www.youtube.com/embed/t9QePUT-Yt8', '2018', '17rascacielos.jpg', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `movie_calidad`
+--
+
+CREATE TABLE `movie_calidad` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `movie_id` int(10) UNSIGNED NOT NULL,
+  `calidad_id` int(10) UNSIGNED NOT NULL,
+  `resolucion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `size` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `formato` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `idioma` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `movie_calidad`
+--
+
+INSERT INTO `movie_calidad` (`id`, `movie_id`, `calidad_id`, `resolucion`, `size`, `formato`, `idioma`) VALUES
+(7, 12, 1, '', '', '', ''),
+(10, 18, 2, '', '', '', ''),
+(21, 8, 1, '706x540', '600', 'AVI', ''),
+(22, 12, 2, '1280x720', '1200', 'MKV', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `movie_genero`
+--
+
+CREATE TABLE `movie_genero` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `movie_id` int(10) UNSIGNED NOT NULL,
+  `genero_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `movie_genero`
+--
+
+INSERT INTO `movie_genero` (`id`, `movie_id`, `genero_id`, `created_at`, `updated_at`) VALUES
+(1, 12, 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 8, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(9, 18, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(4, 'Pedro Perez', 'pperez@dominio.com', '$2y$10$1GJOgcweSHNfr1Ajgi1VDemTPPdsNQQGTMxVEIwIV2WRHyVZKvzfe', NULL, '2018-10-04 01:49:36', '2018-10-04 01:49:36'),
+(8, 'Petra Perez', 'petraperez@dominio.com', '$2y$10$V3ahP17CwP1BCCtZJRdjIehHa7zNqfaKhPyHc8tcDuKah7UgDwOmG', NULL, '2018-10-04 02:02:14', '2018-10-04 02:02:14'),
+(9, 'Bryant Rodriguez', 'brodriguez@dominio.com', '$2y$10$P5Ve2cWuL.N6E8oN1c8NMO4GsbaTStnKZrGLba1NSR55W2hkEZRg2', NULL, '2018-10-10 00:43:57', '2018-10-10 00:43:57'),
+(17, 'LESTER RODRIGUEZ', 'administrador@dominio.com', '$2y$10$grAtIfE9OflU.guEzy85DOozWN6o95egDyBMqnxAy6qsxlGdvVBY6', NULL, '2018-10-10 01:03:32', '2018-10-10 01:03:32'),
+(21, 'MIchael Jordan', 'mjordan@nba.com', '$2y$10$8dKeVT2UH3qVsN1TG55NAO3FfmszPhRvE1t0/dIAYYYEXRZDg6f6u', NULL, '2018-10-13 23:05:46', '2018-10-17 00:29:05');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `calidad`
+--
+ALTER TABLE `calidad`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `genero`
+--
+ALTER TABLE `genero`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `movie`
+--
+ALTER TABLE `movie`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `movie_calidad`
+--
+ALTER TABLE `movie_calidad`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `movie_calidad_movie_id_foreign` (`movie_id`),
+  ADD KEY `movie_calidad_calidad_id_foreign` (`calidad_id`);
+
+--
+-- Indices de la tabla `movie_genero`
+--
+ALTER TABLE `movie_genero`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `movie_genero_movie_id_foreign` (`movie_id`),
+  ADD KEY `movie_genero_genero_id_foreign` (`genero_id`);
+
+--
+-- Indices de la tabla `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`),
+  ADD KEY `password_resets_token_index` (`token`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `calidad`
+--
+ALTER TABLE `calidad`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `genero`
+--
+ALTER TABLE `genero`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `movie`
+--
+ALTER TABLE `movie`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `movie_calidad`
+--
+ALTER TABLE `movie_calidad`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT de la tabla `movie_genero`
+--
+ALTER TABLE `movie_genero`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `movie_calidad`
+--
+ALTER TABLE `movie_calidad`
+  ADD CONSTRAINT `movie_calidad_calidad_id_foreign` FOREIGN KEY (`calidad_id`) REFERENCES `calidad` (`id`),
+  ADD CONSTRAINT `movie_calidad_movie_id_foreign` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`);
+
+--
+-- Filtros para la tabla `movie_genero`
+--
+ALTER TABLE `movie_genero`
+  ADD CONSTRAINT `movie_genero_genero_id_foreign` FOREIGN KEY (`genero_id`) REFERENCES `genero` (`id`),
+  ADD CONSTRAINT `movie_genero_movie_id_foreign` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
