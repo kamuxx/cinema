@@ -25,10 +25,12 @@ class MovieCreateRequest extends Request
     {
         return [
             "nombre"=>"required|unique:movie",
+            "nombre_latino"=>"required",
             "sinopsis"=>"required",
             "duracion"=>"required",
             "trailer"=>"required",
             "year"=>"required",
+            "idioma" =>"required"
             "calidad"=>"required",
             "genero"=>"required"
         ];

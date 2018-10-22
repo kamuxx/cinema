@@ -8,6 +8,14 @@ function addInputResolucion(option){
 		"data-movie-id":option.value,
 		"onblur":"saveResolucion(this)"
 	});
+
+	let selectFormato = $("<select/>",{
+		"name":"formato",
+		"class":"form-control",
+		"placeholder":"Ej: 1280x720",
+		"data-movie-id":option.value,
+		"onblur":"saveResolucion(this)"
+	});
 	
 	if($("input[name='resolucion']").length==0){
 		input.appendTo(resoluciones);
@@ -56,4 +64,60 @@ function saveResolucion(input){
 		resolucionValue += "|"+ $(input).attr("data-movie-id")+"-"+$(input).val();
 	}
 	hdnRes.val(resolucionValue);
+}
+
+function addCalidadMovie(){
+	let tabla = $("#tbl_calidad");
+
+	let tr = $("<tr/>",{
+		"id":+$("select[name=calidad]").val()
+	});
+
+	let td_calidad = $("<td/>",{
+		"text": $("select[name=calidad] option:selected").text()
+	});
+	let td_resolucion = $("<td/>",{
+		"text": $("input[name='resolucion']").val()
+	});
+
+	let td_size = $("<td/>",{
+		"text": $("input[name='size']").val()
+	});
+
+	let td_formato = $("<td/>",{
+		"text": $("select[name=formato] option:selected").text()
+	});
+
+	tr.append(td_calidad).append(td_resolucion).append(td_size).append(td_formato).appendTo(tabla);
+}
+
+function saveCalidadMovie(){
+	let tabla = $("#tbl_calidad");
+	var calidad="";
+	tabla.find("tr").each(function(){
+		let fila  =$(this);
+		if(calidad==""){
+			calidad = fila.attr("id");
+			fila.find("td").each(function(){
+				calidad+="-"+$(this).text();
+			});
+			calidad+="|";
+		}else{
+			if(calidad=="undefined|"){
+				calidad = fila.attr("id");
+				fila.find("td").each(function(){
+					calidad+="-"+$(this).text();
+				});
+				calidad+="|";
+				alert(calidad);
+			}else{
+				calidad += fila.attr("id");
+				fila.find("td").each(function(){
+					calidad+="-"+$(this).text();
+				});
+				calidad+="|";
+			}
+		}
+	});
+	$("input[name='hdn_calidad']").val(calidad);
 }

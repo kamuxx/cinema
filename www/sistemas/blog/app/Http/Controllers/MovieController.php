@@ -41,7 +41,8 @@ class MovieController extends Controller
      */
     public function index()
     {
-        return view("movies.index");
+        $calidad = Calidad::all(["id","nombre"]);
+        return view("movies.index",["calidad"=>$calidad]);
     }
 
     /**
@@ -97,10 +98,18 @@ class MovieController extends Controller
         $movieGenero->genero_id=$request["genero"];
         $movieGenero->save();
 
-        $movieCalidad = new MovieCalidad();
-        $movieCalidad->movie_id=$movie->id;
-        $movieCalidad->calidad_id=$request["calidad"];
-        $movieCalidad->save();
+        $resolucion = explode("|",$request["hdn_calidad"]);
+        unset($resolucion[count($resolucion) -1]);
+        foreach ($resolucion as $unaResol) {//Actualizar la(s) calidads de la pelicula
+            $unaResol = explode("-",$unaResol);
+            $movieCalidad = new MovieCalidad();
+            $movieCalidad->calidad_id=$unaResol[0]; //id de la resolucion
+            $movieCalidad->resolucion=$unaResol[2]; //tamaño de resolucion
+            $movieCalidad->size=$unaResol[3]; //size 
+            $movieCalidad->formato=$unaResol[4]; //formato    
+            $movieCalidad->movie_id = $id;
+            $movieCalidad->save();
+        }
 
 
         Session::flash("message","Registro Guardado Exitosamente");
@@ -119,10 +128,12 @@ class MovieController extends Controller
     {
         $genero = $this->movie->getGenero()->where("movie_id",$this->movie->id)->get();
         $genero = Genero::find($genero[0]->genero_id);
-        $calidad = $this->movie->getCalidad()->where("movie_id",$this->movie->id)->get();
-        $calidad = Calidad::find($calidad[0]->calidad_id);
-        //$genero = Genero::find($genero->genero_id);
-        return view("layouts.movies.detalle",["movie"=>$this->movie,"genero"=>$genero->gen_nombre,"calidad"=>$calidad]);
+        $movieCalidad = $this->movie->getMovieCalidad()->where("movie_id",$this->movie->id)->get();
+        $calidad = array();
+        foreach ($movieCalidad as $idx => $unaMovieCalidad) {
+            $calidad[$idx] = $unaMovieCalidad->getCalidad($unaMovieCalidad->calidad_id);
+        }
+        return view("layouts.movies.detalle",["movie"=>$this->movie,"genero"=>$genero->gen_nombre,"movieCalidad"=>$movieCalidad,"calidad"=>$calidad]);
     }
 
     /**
@@ -136,8 +147,8 @@ class MovieController extends Controller
         $calidad = Calidad::all(["id","nombre"]);
         $genero = Genero::all(["id","gen_nombre"]);
 
-        if(!empty($this->movie->getCalidad())){
-            $movieCalidad = $this->movie->getCalidad()->where("movie_id",$id)->get();
+        if(!empty($this->movie->getMovieCalidad())){
+            $movieCalidad = $this->movie->getMovieCalidad()->where("movie_id",$id)->get();
             $movieGenero = $this->movie->getGenero()->where("movie_id",$id)->get();
         }else{
             $movieCalidad="";
@@ -155,18 +166,28 @@ class MovieController extends Controller
      */
     public function update(MovieUpdateRequest $request, $id)
     {
-
-        $this->movie->fill($request->all())->save();
-        $movieCalidad = MovieCalidad::where("movie_id","=",$id)->first();
-        if(empty($movieCalidad)){
-            $movieCalidad->calidad_id=$request["calidad"];
-            $movieCalidad->movie_id=$id;
-        }else{
-            $movieCalidad->calidad_id=$request["calidad"];            
+        //die(json_encode($request->all()));
+        $this->movie->fill($request->all())->save();//Actualizar la pelicula
+        $resolucion = explode("|",$request["hdn_calidad"]);
+        unset($resolucion[count($resolucion) -1]);
+        foreach ($resolucion as $unaResol) {//Actualizar la(s) calidads de la pelicula
+            $unaResol = explode("-",$unaResol);
+            $movieCalidad = MovieCalidad::where("movie_id","=",$id,"and")->where("calidad_id","=",$unaResol[0])->first();
+            if(empty($movieCalidad)){
+               $movieCalidad = new MovieCalidad();
+               $movieCalidad->calidad_id=$unaResol[0]; //id de la resolucion
+                $movieCalidad->resolucion=$unaResol[2]; //tamaño de resolucion
+                $movieCalidad->size=$unaResol[3]; //size 
+                $movieCalidad->formato=$unaResol[4]; //formato    
+                $movieCalidad->movie_id = $id;
+            }else{
+                $movieCalidad->calidad_id=$unaResol[0]; //id de la resolucion
+                $movieCalidad->resolucion=$unaResol[2]; //tamaño de resolucion
+                $movieCalidad->size=$unaResol[3]; //size 
+                $movieCalidad->formato=$unaResol[4]; //formato    
+            }
+            $movieCalidad->save();
         }
-        //print_r(json_encode($movieCalidad));
-        //die();
-        $movieCalidad->save();
 
         $movieGenero = MovieGenero::where("movie_id","=",$id)->first();
         if(empty($movieGenero)){

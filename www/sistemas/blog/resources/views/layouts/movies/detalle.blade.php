@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-9 card p-0">
             <div class="card-header bg-primary text-center text-white">
-                <h5 class='card-title'>Rascacielos: Rescate en las alturas</h5>
+                <h5 class='card-title'>{!!$movie->nombre!!}</h5>
             </div>
             <div class="card-body bg-light p-0 mt-0">
                 <div class="row">
@@ -24,15 +24,12 @@
                         <p class='card-text text-justify'>{!!$movie->sinopsis!!}</p>
                         <p class="card-text text-center">Informacion Adicional</p>
                         <p class="card-text text-center">
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush shadow-sm">
                             <li class="list-group-item">Titulo Original: {!!$movie->nombre!!}</li>
-                            <li class="list-group-item">Título Latino: Rascacielos: Rescate en las alturas</li>
-                            <li class="list-group-item">Título Español: El Rascacielos</li>
+                            <li class="list-group-item">Título Latino: {!!$movie->nombre_latino!!}</li>
                             <li class="list-group-item">Genero: {!!$genero!!}</li>
-                            <li class="list-group-item">País: EE.UU.</li>
                             <li class="list-group-item">Duración: {!!$movie->duracion!!} minutos</li>
                             <li class="list-group-item">Año: {!!$movie->year!!}</li>
-                            <li class="list-group-item">Servidores Online: Openload, Netu y RapidVideo</li>
                             <li class="list-group-item">Servidores Descarga: MEGA, Google Drive, 4Shared, 1Fichier, Filecloud y Uptobox (en 1 Link)</li>
                         </ul>
                         </p>
@@ -40,32 +37,21 @@
                     <div class="col-md-8 offset-md-2 pt-3">
                         <div class="w-100 border border-secondary"></div>
                     </div>
-                    <div class="col-md-8 offset-md-2 pt-3">
-                        <p class="card-text text-center">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Calidad: DVDRip</li>
-                                <li class="list-group-item">Idioma: Audio Español Latino | Audio Ingles Subtitulada en Español pegados</li>
-                                <li class="list-group-item">Peso: 864 MB | 998 MB</li>
-                                <li class="list-group-item">Formato: .AVI</li>
-                                <li class="list-group-item">Resolución: 720x304</li>
+                    <!-- Calidades disponibles -->
+                    @foreach ($movieCalidad as $idx => $unaMovieCalidad)  
+                        <div class="col-md-8 offset-md-2 pt-3">
+                            <p class="card-text text-center">
+                                <ul class="list-group list-group-flush shadow-sm">
+                                <li class="list-group-item">Calidad: {!!$calidad[$idx]->nombre!!}</li>
+                                <li class="list-group-item">Idioma: {!!$movie->idioma!!}</li>
+                                <li class="list-group-item">Peso: {!!$unaMovieCalidad->size!!} MB</li>
+                                <li class="list-group-item">Formato: {!!$unaMovieCalidad->formato!!}</li>
+                                <li class="list-group-item">Resolución: {!!$unaMovieCalidad->resolucion!!}</li>
                             </ul>
-                        </p>
-                    </div>
-                    <div class="col-md-8 offset-md-2 pt-3">
-                        <div class="w-100 border border-secondary"></div>
-                    </div>
-                    <div class="col-md-8 offset-md-2 pt-3">
-                        <p class="card-text text-center">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Calidad: Blu-Ray RIP HD 720p | 1080p</li>
-                                <li class="list-group-item">Idioma: Audio Español Latino AC3 2.0 | Audio Ingles AC3 5.1 Subtitulada en Español</li>
-                                <li class="list-group-item">Peso: 1,28 GB | 2,28 GB</li>
-                                <li class="list-group-item">Formato: .MKV</li>
-                                <li class="list-group-item">Resolución: 1280x528 | 1916x796</li>
-                            </ul>
-                        </p>
-                    </div>
-                    <div class="col-md-8 offset-md-2 pt-3">
+                            </p>
+                        </div>
+                    @endforeach
+                    <div class="col-md-8 offset-md-2 pt-3 shadow-sm">
                         <div class="w-100 border border-secondary"></div>
                     </div>
                     <div class="col-md-10 offset-md-1 pt-3">
@@ -81,7 +67,7 @@
             </div>
         </div>
         <div class="col-md-3 pr-0 pt-5">
-            <div class="card mb-5">
+            <div class="card shadow-sm mb-5">
                 <div class="card-header bg-danger text-white text-center">
                     <h6 class="card-title">
                         Proximos Estrenos

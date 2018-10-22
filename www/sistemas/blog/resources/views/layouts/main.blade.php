@@ -62,6 +62,7 @@
           <a class="dropdown-item" href="#">Accion</a>
           <a class="dropdown-item" href="#">Aventura</a>
           <a class="dropdown-item" href="#">Comedia</a>
+          
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -91,36 +92,9 @@
     <div class="container-fluid">
         @yield("content")
     </div>
-    <!-- <footer class="footer">
-      <div class="container" style="background-color:#6666ff">
-        <div class="row">
-          <div class="col">
-            <p class='p-0'>
-              <a href="/" class='text-white'><i class="fas fa-home"></i>&nbsp;Inicio</a><br>
-              <a href="/contacto" class='text-white'><i class="fas fa-headset"></i>&nbsp;Contactanos</a><br>
-              <a href="/" class='text-white'><i class="fas fa-eye"></i>&nbsp;Revisiones</a><br>
-            </p>
-          </div>
-          <div class="col"></div>
-          <div class="col"></div>
-        </div>
-        <div class="row text-center">
-          <div class="col-12 text-center text-white">
-            Nuestras Redes Sociales
-          </div>
-          <div class="col-12 d-flex justify-content-around">
-              <a href="" class='text-white' style="font-size:xx-large"><i class="fab fa-twitter"></i></a>
-              <a href="" class='text-white' style="font-size:xx-large"><i class="fab fa-facebook"></i></a>
-              <a href="" class='text-white' style="font-size:xx-large"><i class="fab fa-instagram"></i></a>
-              <a href="" class='text-white' style="font-size:xx-large"><i class="fab fa-google"></i></a>
-              <a href="" class='text-white' style="font-size:xx-large"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-      </div>
-    </footer> -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" ></script>
+    <script src="{{URL::to("js/jquery-3.3.1.js")}}" ></script>
+    <script src="{{URL::to("js/popper.js")}}"></script>
+    <script src="{{URL::to("js/bootstrap.js")}}" ></script>
 <script>
   $(document).ready(function(){
     $("[data-toggle='tooltip']").tooltip();

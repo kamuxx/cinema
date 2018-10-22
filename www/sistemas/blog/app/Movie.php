@@ -14,11 +14,11 @@ class Movie extends Model
 {
     protected $table = "movie";
 
-    protected $fillable = ["nombre","sinopsis","duracion","trailer","year","imagen"];
+    protected $fillable = ["nombre","sinopsis","duracion","trailer","year","imagen","nombre_latino","idioma"];
 
     public $timestamps = false;
 
-    public function getCalidad() {
+    public function getMovieCalidad() {
     	return $this->hasMany('Cinema\MovieCalidad');    
 	}
 
